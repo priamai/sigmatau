@@ -78,7 +78,7 @@ metrics:
           format: ".2f"
           samples: 20
 
-        - id: '5d556e18-8f9d-aabb-8d5a-f4b557d8d295'
+        - id: '5d556e18-889d-aabb-8d5a-f4b557d8d295'
           matrix:
               tp: 0.1
               fp: 0.89

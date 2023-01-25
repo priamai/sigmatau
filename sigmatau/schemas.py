@@ -123,6 +123,7 @@ class Report(YamlModel):
     class Config:
         extra = Extra.forbid
 
+
 class Metrics(YamlModel):
     version: str
     signature_type: str
@@ -132,11 +133,20 @@ class Metrics(YamlModel):
 
 class SigmaTau(Sigma):
     """
-    Standard Sigma validator
-    The detection field needs more granularity
+    Add a new field called metrics
     """
     metrics: Optional[Metrics]
 
     class Config:
         extra = Extra.forbid
 
+    @root_validator(pre=True)
+    def check_duplicates(cls, values):
+        if 'metrics' in values:
+            if 'reports' in values['metrics']:
+                ids = set()
+                for report in values['metrics']['reports']:
+                    if report['id'] in ids: raise ValueError('Duplicated ids')
+                    else: ids.add(report['id'])
+        # check row and columns
+        return values
