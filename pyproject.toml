@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sigmatau"
+authors = [
+    {name = "Paolo Di Prodi", email = "info@priam.ai"},
+]
+description = "The Sigma Tau project for validating Sigma signatures and Tau extension"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["sigma", "security"]
+license = {file = 'LICENSE'}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "pydantic-yaml",
+    "pydantic",
+    'importlib-metadata; python_version>="3.7"',
+]
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+# All the following settings are optional:
+where = ["sigmatau"]  # ["."] by default
+include = ["sigmatau*"]  # ["*"] by default
+exclude = ["tests*","sigmatau.tests*"]  # empty by default
+namespaces = true  # true by default
+[project.optional-dependencies]
+
+[project.scripts]
+sigmatau-cli = "sigmatau.main:main"
+
+# ... other project metadata fields as specified in:
+#     https://packaging.python.org/en/latest/specifications/declaring-project-metadata/

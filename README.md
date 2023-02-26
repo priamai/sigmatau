@@ -18,6 +18,17 @@ This relies on the confusion matrix and derived measures: precision, recall, f-m
 ## Schema
 The schema is implemented as a pydantic model on YML files.
 
+## Usage
+To validate a folder with tau signatures:
+```
+-folder ./tests/rules/tau -t
+```
+To validate a folder with sigma signatures:
+```
+-folder ./tests/rules/sigma -s
+```
+
+
 ## Author:
 
 Priam AI Cyber ltd.
