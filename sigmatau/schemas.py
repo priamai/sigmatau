@@ -99,21 +99,6 @@ class Matrix(YamlModel):
         # check row and columns
         return values
 
-    @validator('tp')
-    def set_tp(cls, v):
-        assert v>=0.0 and v<=1.0, 'outside bound'
-
-    @validator('fp')
-    def set_fp(cls, v):
-        assert v>=0.0 and v<=1.0, 'outside bound'
-
-    @validator('fn')
-    def set_fn(cls, v):
-        assert v>=0.0 and v<=1.0, 'outside bound'
-
-    @validator('tn')
-    def set_tn(cls, v):
-        assert v>=0.0 and v<=1.0, 'outside bound'
 class Report(YamlModel):
     id: str
     matrix: Matrix

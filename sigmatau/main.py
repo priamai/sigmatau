@@ -33,6 +33,7 @@ def main(args):
     """ Main entry point of the app """
     sigma = args.sigma
     tau = args.tau
+    stats = args.stats
 
     if args.folder:
         logger.info(f'Scanning folder {args.folder}')
@@ -40,18 +41,31 @@ def main(args):
         logger.info(f'Tau = {args.tau}')
         p = Path(args.folder).glob('**/*.yml')
         files = [x for x in p if x.is_file()]
+        total_files = len(files)
+        valid_sigma = 0
+        valid_tau = 0
         for file in files:
             logger.info(file.name)
             if tau:
                 try:
                     s = SigmaTau.parse_file(file)
+                    missing = [k for k, v in s.dict().items() if v is None]
+                    logger.info(f'Total missing fields {len(missing)}')
+                    valid_tau += 1
                 except Exception as e:
                     logger.error(e)
             if sigma:
                 try:
                     s = Sigma.parse_file(file)
+                    missing = [k for k, v in s.dict().items() if v is None]
+                    logger.info(f'Total missing fields {len(missing)}')
+                    valid_sigma += 1
                 except Exception as e:
                     logger.error(e)
+
+        logger.info(f'Total files {total_files}')
+        logger.info(f'Total valid sigma files {valid_sigma}')
+        logger.info(f'Total valid tau files {valid_tau}')
     else:
         logger.warning("Folder to scan is missing")
 def dir_path(path):
@@ -71,6 +85,7 @@ if __name__ == "__main__":
     # Optional argument flag which defaults to False
     parser.add_argument("-s", "--sigma", action="store_true", default=False)
     parser.add_argument("-t", "--tau", action="store_true", default=False)
+    parser.add_argument("-ss", "--stats", action="store_true", default=False)
 
     # Optional verbosity counter (eg. -v, -vv, -vvv, etc.)
     parser.add_argument(
