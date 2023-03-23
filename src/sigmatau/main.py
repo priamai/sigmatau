@@ -11,6 +11,7 @@ import os
 import logging
 from pathlib import Path
 from sigmatau.schemas import *
+from collections import Counter
 
 # create logger
 logger = logging.getLogger('sigmatau')
@@ -44,21 +45,35 @@ def main(args):
         total_files = len(files)
         valid_sigma = 0
         valid_tau = 0
+        all_missing = []
+        all_present = []
         for file in files:
             logger.info(file.name)
             if tau:
                 try:
                     s = SigmaTau.parse_file(file)
-                    missing = [k for k, v in s.dict().items() if v is None]
-                    logger.info(f'Total missing fields {len(missing)}')
+
+                    if stats:
+                        missing = [k for k, v in s.dict().items() if v is None]
+                        present = [k for k, v in s.dict().items() if v is not None]
+                        all_missing += missing
+                        all_present += present
+                        logger.info(f'Total missing fields {len(missing)}')
+
                     valid_tau += 1
                 except Exception as e:
                     logger.error(e)
             if sigma:
                 try:
                     s = Sigma.parse_file(file)
-                    missing = [k for k, v in s.dict().items() if v is None]
-                    logger.info(f'Total missing fields {len(missing)}')
+
+                    if stats:
+                        missing = [k for k, v in s.dict().items() if v is None]
+                        present = [k for k, v in s.dict().items() if v is not None]
+                        logger.info(f'Total missing fields {len(missing)}')
+                        all_missing += missing
+                        all_present += present
+
                     valid_sigma += 1
                 except Exception as e:
                     logger.error(e)
@@ -66,6 +81,11 @@ def main(args):
         logger.info(f'Total files {total_files}')
         logger.info(f'Total valid sigma files {valid_sigma}')
         logger.info(f'Total valid tau files {valid_tau}')
+        if stats:
+            m = dict(Counter(all_missing))
+            logger.info('Missing field count %s' % m)
+            p = dict(Counter(all_present))
+            logger.info('Available field count %s' % p)
     else:
         logger.warning("Folder to scan is missing")
 def dir_path(path):

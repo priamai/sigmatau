@@ -161,8 +161,37 @@ To validate a folder just with the standard sigma signatures:
 ```
 sigmatau-cli -folder ./tests/rules/sigma -s
 ```
+
 You can then measure some simple stats on the fields.
 
+```
+sigmatau-cli -folder ./tests/rules/sigma -s -ss
+```
+
+This produces:
+
+```
+2023-03-23 16:11:44,243 - sigmatau - INFO - Scanning folder ./tests/rules/sigma
+2023-03-23 16:11:44,244 - sigmatau - INFO - Sigma = True
+2023-03-23 16:11:44,244 - sigmatau - INFO - Tau = False
+2023-03-23 16:11:44,244 - sigmatau - INFO - file_event_lnx_persistence_sudoers_files.yml
+2023-03-23 16:11:44,248 - sigmatau - INFO - Total missing fields 2
+2023-03-23 16:11:44,248 - sigmatau - INFO - win_alert_mimikatz_keywords.yml
+2023-03-23 16:11:44,253 - sigmatau - INFO - Total missing fields 2
+2023-03-23 16:11:44,253 - sigmatau - INFO - net_connection_lnx_ngrok_tunnel.yml
+2023-03-23 16:11:44,256 - sigmatau - INFO - Total missing fields 3
+2023-03-23 16:11:44,256 - sigmatau - INFO - win_exchange_set_oabvirtualdirectory_externalurl.yml
+2023-03-23 16:11:44,259 - sigmatau - INFO - Total missing fields 2
+2023-03-23 16:11:44,259 - sigmatau - INFO - proc_creation_win_7zip_cve_2022_29072.yml
+2023-03-23 16:11:44,264 - sigmatau - INFO - Total missing fields 2
+2023-03-23 16:11:44,264 - sigmatau - INFO - web_cve_2019_11510_pulsesecure_exploit.yml
+2023-03-23 16:11:44,267 - sigmatau - INFO - Total missing fields 1
+2023-03-23 16:11:44,267 - sigmatau - INFO - Total files 6
+2023-03-23 16:11:44,267 - sigmatau - INFO - Total valid sigma files 6
+2023-03-23 16:11:44,267 - sigmatau - INFO - Total valid tau files 0
+2023-03-23 16:11:44,267 - sigmatau - INFO - Missing field count {'related': 6, 'fields': 5, 'modified': 1}
+2023-03-23 16:11:44,267 - sigmatau - INFO - Available field count {'title': 6, 'id': 6, 'status': 6, 'description': 6, 'references': 6, 'author': 6, 'date': 6, 'modified': 5, 'tags': 6, 'logsource': 6, 'falsepositives': 6, 'level': 6, 'detection': 6, 'fields': 1}
+```
 
 ## Author:
 
