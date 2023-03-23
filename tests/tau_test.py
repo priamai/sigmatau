@@ -16,13 +16,14 @@
 
 import unittest
 import glob
-from sigmatau.schemas import SigmaTau
+from schemas import SigmaTau
 class TauCase(unittest.TestCase):
     def test_stuff(self):
         for file in glob.glob('./rules/tau/*.yml'):
             print(file)
             try:
                 s = SigmaTau.parse_file(file)
+                print(s.metrics.reports[0])
             except Exception as e:
                 print(e)
 

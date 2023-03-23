@@ -10,7 +10,7 @@ import argparse
 import os
 import logging
 from pathlib import Path
-from schemas import *
+from .schemas import *
 
 # create logger
 logger = logging.getLogger('sigmatau')
@@ -74,8 +74,7 @@ def dir_path(path):
     else:
         raise argparse.ArgumentTypeError(f"readable_dir:{path} is not a valid path")
 
-
-if __name__ == "__main__":
+def run():
     """ This is executed when run from the command line """
     parser = argparse.ArgumentParser()
 
@@ -103,3 +102,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     main(args)
+
+if __name__ == "__main__":
+    run()

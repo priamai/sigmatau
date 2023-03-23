@@ -16,7 +16,7 @@
 
 import unittest
 import glob
-from sigmatau.schemas import Sigma
+from schemas import Sigma
 
 class SigmaCase(unittest.TestCase):
     def test_rules(self):
