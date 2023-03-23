@@ -10,7 +10,7 @@ import argparse
 import os
 import logging
 from pathlib import Path
-from .schemas import *
+from sigmatau.schemas import *
 
 # create logger
 logger = logging.getLogger('sigmatau')

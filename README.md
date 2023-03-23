@@ -161,6 +161,7 @@ To validate a folder just with the standard sigma signatures:
 ```
 sigmatau-cli -folder ./tests/rules/sigma -s
 ```
+You can then measure some simple stats on the fields.
 
 
 ## Author:
