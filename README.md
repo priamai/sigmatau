@@ -192,6 +192,48 @@ This produces:
 2023-03-23 16:11:44,267 - sigmatau - INFO - Missing field count {'related': 6, 'fields': 5, 'modified': 1}
 2023-03-23 16:11:44,267 - sigmatau - INFO - Available field count {'title': 6, 'id': 6, 'status': 6, 'description': 6, 'references': 6, 'author': 6, 'date': 6, 'modified': 5, 'tags': 6, 'logsource': 6, 'falsepositives': 6, 'level': 6, 'detection': 6, 'fields': 1}
 ```
+## Kestrel resolver
+
+The Kestrel [language](https://kestrel.readthedocs.io/) can be used to trigger automatic investigations from an alert to gather additional evidence for the human operator.
+
+We are using ACH to provide an evidence based approach for determination of alerts.
+
+The final DISPLAY step of a hunt flow should produce a table in the following format.
+
+The columns are the hypothesis: 
+* TP trupe positive
+* FP false positive
+* ND not determined (or other).
+
+The rows are the evidence:
+* 1 maps positive toward the hypothesis
+* 0 maps neutral tward the hypothesis
+* -1 maps negative toward the hypothesis
+
+|            | TP | FP | ND |
+|------------|----|----|----|
+| Evidence 1 | 1  | 1  | 0  |
+| Evidence 2 | 1  | 0  | 0  |
+| Evidence N | 1  | 0  | 0  |
+| Scoring    | 3  | 1  | 0  |
+
+The scoring in this case suggests that this particular investigation is very likely to be a true positive.
+
+The hunt flow files are referenced via the resource directly.
+
+```
+title: Mimikatz Use
+id: 06d71506-7beb-4f22-8888-e2e5e2ca7fd8
+status: experimental
+description: This method detects mimikatz keywords in different Eventlogs (some of them only appear in older Mimikatz version that are however still used by different threat groups)
+references:
+    - https://tools.thehacker.recipes/mimikatz/modules
+author: Florian Roth (rule), David ANDRE (additional keywords)
+huntflow_references: 
+    - https://raw.githubusercontent.com/priamai/playbooks/triage/mimikatz.hf
+    
+```
+Example of an [ACH](https://www.ecrimelabs.com/blog/2021/2/20/analysis-of-competing-hypotheses-could-help-you-during-an-incident-response-situation)
 
 ## Author:
 

@@ -1,0 +1,12 @@
+# create four process entities in Kestrel and store them in the variable `proclist`
+proclist = NEW process [ {"name": "cmd.exe", "pid": "123"}
+                       , {"name": "explorer.exe", "pid": "99"}
+                       , {"name": "firefox.exe", "pid": "201"}
+                       , {"name": "chrome.exe", "pid": "205"}
+                       ]
+
+# match a pattern of browser processes, and put the matched entities in variable `browsers`
+browsers = GET process FROM proclist WHERE [process:name IN ('firefox.exe', 'chrome.exe')]
+
+# display the information (attributes name, pid) of the entities in variable `browsers`
+DISP browsers ATTR name, pid
